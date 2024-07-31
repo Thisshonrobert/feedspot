@@ -47,7 +47,10 @@ const postSchema = new mongoose.Schema({
         data:buffer,
         contentType:String
     },
-    likes_count:Number
+    likes_count:{
+        type:Number,
+        default:0
+    }
 },{timestamps:true})
 
 const Users = new mongoose.model('Users',userSchema)
