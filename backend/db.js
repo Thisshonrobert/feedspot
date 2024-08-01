@@ -53,9 +53,10 @@ const postSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-const Users = new mongoose.model('Users',userSchema)
-const Posts = new mongoose.model('Posts',postSchema)
+const Users = mongoose.model('Users',userSchema)
+const Posts = mongoose.model('Posts',postSchema)
 
 module.exports = {
-    Users, Posts
+    Users, 
+    Posts
 }

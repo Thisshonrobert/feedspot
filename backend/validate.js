@@ -9,6 +9,12 @@ const userValidateObj = zod.object({
     password:zod.string().min(6)
 })
 
+const signinValidateObj = zod.object({
+    user_email:zod.string().email(),
+    password:zod.string().min(6)
+})
+
 module.exports = {
-    userValidateObj
+    userValidateObj,
+    signinValidateObj
 }
