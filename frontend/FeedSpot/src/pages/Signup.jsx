@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaLock, FaMailBulk } from "react-icons/fa";
 import bg from '../assets/bg.jpg'
-import { Button } from "@radix-ui/themes";
+import { Button, Link } from "@radix-ui/themes";
 import { RiAccountBoxLine } from "react-icons/ri";
 const Signup = () => {
     const[name,setName] = useState("");
@@ -52,11 +52,11 @@ const Signup = () => {
           </div>
 
         </div>
-        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]">
-          Signup
+        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[25%] md:ml-[35%]">
+          Sign Up
         </Button>
         <div className="text-center text-sm text-white mt-4">
-          Already have an account? <a href="#" className="font-semibold hover:underline text-red-600">Login</a>
+          Already have an account? <Link href="/signin" className="font-semibold hover:underline text-green-600">Login</Link>
         </div>
       </form>
       <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
