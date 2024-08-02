@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaLock, FaMailBulk } from "react-icons/fa";
 import bg from '../assets/bg2.jpg'
-import { Button } from "@radix-ui/themes";
+import { Button, Link } from "@radix-ui/themes";
  
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ const Signin = () => {
   return (
     <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
       <form className="relative z-10 bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-70 rounded-xl p-6 w-full max-w-md mx-4 sm:mx-0" onSubmit={handleLogin}>
-        <h1 className="text-center text-2xl text-white mb-8">Login to FEEDsPOT</h1>
+        <h1 className="text-center text-2xl text-white mb-8">Login to FEEDSPOT</h1>
         <div className="space-y-5 mb-6">
           <div className="flex items-center">
           <FaMailBulk className="text-white text-xl mr-3" />
@@ -43,7 +43,7 @@ const Signin = () => {
           Login
         </Button>
         <div className="text-center text-sm text-white mt-4">
-          Don't have an account? <a href="#" className="font-semibold hover:underline text-red-600">Register</a>
+          Don't have an account? <Link href="/signup" className="font-semibold hover:underline text-red-600">Register</Link>
         </div>
       </form>
       <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
