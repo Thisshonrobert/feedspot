@@ -1,34 +1,15 @@
-import React, { useState } from 'react';
-import { Heading, Card, Avatar, Box, Text, Flex, TextArea, Button,TextField,DropdownMenu} from '@radix-ui/themes';
+import { Avatar, Box, Button, Card, Flex, Heading, Text, TextArea, TextField } from '@radix-ui/themes';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const [birthdate, setBirthdate] = useState('');
-  const [age, setAge] = useState('');
-
-  const calculateAge = (birthdate) => {
-    const birthDate = new Date(birthdate);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  };
-
-  const handleBirthdateChange = (e) => {
-    const selectedDate = e.target.value;
-    setBirthdate(selectedDate);
-    const calculatedAge = calculateAge(selectedDate);
-    setAge(calculatedAge);
-  };
-
+  const navigate = useNavigate();
   return (
-    <div className='py-4 pl-[10%]'>
+    <div className='py-4 pl-[12%]'>
       <Card className='max-w-4xl'>
-        <Box className='mx-32 my-6'>
+        <Box className='mx-40 my-6'>
           <Heading color='gray' as='h2' weight='medium' className='mb-6'>Profile</Heading>
-          <Box maxWidth="500px" className='mb-4'>
+          <Box maxWidth="500px" className='mb-4 '>
             <Card>
               <Flex justify='between' align='center'>
                 <Flex gap="3" align="center">
@@ -47,35 +28,32 @@ const Profile = () => {
                     </Text>
                   </Box>
                 </Flex>
-                <Button radius='full' size='2'>Change photo</Button>
+                <Button radius='full' size='2' className='px-[10%]'>Change photo</Button>
               </Flex>
             </Card>
           </Box>
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Website</Heading>
-          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4' />
+          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 bg-gray-100' />
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Bio</Heading>
-          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4' />
+          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4 bg-gray-100' />
           <Flex align='center' justify='between'>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Your Birthday</Heading>
-              <input
-                type='date'
-                className='border rounded-lg outline-none w-56'
-                value={birthdate}
-                onChange={handleBirthdateChange}
+              <TextField.Root 
+                className='border rounded-lg outline-none w-56 bg-gray-100'
+                value={'09/09/3003'}
               />
             </Box>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Age</Heading>
-              <input
-                type='text'
-                className='border rounded-lg outline-none w-24'
-                value={age}
+              <TextField.Root 
+                className='border rounded-lg outline-none w-24 bg-gray-100'
+                value={'1'}
                 readOnly
               />
             </Box>
           </Flex>
-        
+          <Button onClick={()=>navigate('/editprofile')} size='3' radius='full' className='mt-8 px-[10%] ml-56'>Edit Profile</Button>
         </Box>
       </Card>
     </div>
@@ -85,4 +63,4 @@ const Profile = () => {
 export default Profile;
 
 //set the username,avatar,name dynamic
-//save the gender
+
