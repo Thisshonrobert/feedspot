@@ -1,12 +1,13 @@
+import '@radix-ui/themes/styles.css';
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Layout from '../src/Layout';
+import Dashboard from './pages/Dashboard';
+import NewPost from './pages/NewPost';
+import Profile from './pages/Profile';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
-import Profile from './pages/Profile';
-import Dashboard from './pages/Dashboard';
-import Layout from '../src/Layout';
-import NewPost from './pages/NewPost'
-import '@radix-ui/themes/styles.css';
+import EditProfile from './pages/EditProfile';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Layout><Dashboard /></Layout>} />
         <Route path="/profile" element={<Layout><Profile /></Layout>} />
         <Route path="/newpost" element={<Layout><NewPost /></Layout>} />
+        <Route path='/editprofile' element={<Layout><EditProfile/></Layout>}/>
       </Routes>
     </BrowserRouter>
   );
