@@ -4,13 +4,15 @@ import bg from '../assets/bg2.jpg'
 import { Button, Link } from "@radix-ui/themes";
  
 const Signin = () => {
-  const [email, setEmail] = useState("");
+  const [user_email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
   
-  };
+  // };
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
@@ -23,7 +25,7 @@ const Signin = () => {
               type="email"
               placeholder="Email ID"
              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={email}
+              value={user_email}
               onChange={(e) => setEmail(e.target.value)}
               defaultValue={""}
               required
@@ -39,7 +41,15 @@ const Signin = () => {
           </div>
 
         </div>
-        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]">
+        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]" onClick={ async () => {
+            const response = await axios.post("http://localhost:3000/api/v1/users/signin", {
+              user_name,
+              password
+            });       
+            localStorage.setItem("token",response.data.token);
+            navigate("/");
+            window.location.reload();
+            }}>
           Login
         </Button>
         <div className="text-center text-sm text-white mt-4">
