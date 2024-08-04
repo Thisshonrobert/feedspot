@@ -10,6 +10,9 @@ export default {
         150: '1.5',
         175:'1.7',
         200: '2',
+      }, 
+      fontFamily: {
+        'playwrite': ['Playwrite België Vlaams Gewest']
       }
     },
   },
