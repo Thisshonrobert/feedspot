@@ -4,14 +4,13 @@ import bg from '../assets/bg.jpg'
 import { Button } from "@radix-ui/themes";
 import { RiAccountBoxLine } from "react-icons/ri";
 const Signup = () => {
-    const[name,setName] = useState("");
-  const [email, setEmail] = useState("");
+  const[user_name,setName] = useState("");
+  const [user_email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-  
-  };
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  // };
+  const navigate = useNavigate();
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
@@ -24,7 +23,7 @@ const Signup = () => {
               type="text"
               placeholder="User Name"
              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={name}
+              value={user_name}
               onChange={(e) => setName(e.target.value)}
               defaultValue={""}
               required
@@ -36,7 +35,7 @@ const Signup = () => {
               type="email"
               placeholder="Email ID"
              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={email}
+              value={user_email}
               onChange={(e) => setEmail(e.target.value)}
               defaultValue={""}
               required
@@ -52,7 +51,27 @@ const Signup = () => {
           </div>
 
         </div>
-        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]">
+        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]" onClick={async () => {
+                    try {
+                        const response = await axios.post("http://localhost:3000/api/v1/users/signup", {
+                        user_name,
+                        user_email,
+                        password
+                        });
+                        localStorage.setItem("token", response.data.token);
+                        navigate("/view_products");
+                        } catch (error) {
+                            if (error.response) {
+                            if (error.response.status === 409) {
+                                toast.error(error.response.data.msg);
+                            } else if(error.response.status === 422){
+                                toast.error(error.response.data.msg);
+                            }
+                            } else {
+                            toast.error("Network error");
+                            }
+                        }
+                        }}>
           Signup
         </Button>
         <div className="text-center text-sm text-white mt-4">
