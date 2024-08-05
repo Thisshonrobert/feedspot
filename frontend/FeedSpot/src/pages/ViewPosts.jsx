@@ -1,8 +1,7 @@
 import React from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-import { Grid } from '@mui/material';
 import Post from '../components/Post';
-import { PostsAtom } from '../store/atoms/PostsAtom';
+import { PostsAtom } from '../store/atoms/PostAtom';
 import ClockLoader from "react-spinners/ClockLoader";
 
 export default function ViewPosts() {
@@ -16,13 +15,9 @@ export default function ViewPosts() {
 
       return (
         <div className='p-5 bg-slate-200'>
-          <Grid container justify="center" spacing={4}>
             {posts.map((post) => (
-              <Grid item key={post._id} xs={12} sm={6} md={4} lg={3}>
-                <Post product={post} />
-              </Grid>
+                <Post key={post._id} product={post} />
             ))}
-          </Grid>
         </div>
       );
     case 'hasError':

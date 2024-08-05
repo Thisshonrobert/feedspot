@@ -1,14 +1,15 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./pages/Signin"
 import Signup from "./pages/Signup"
 import FetchPosts from './components/FetchPosts';
 import '@radix-ui/themes/styles.css';
 import ViewPosts from "./pages/ViewPosts";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
-    <BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
     <FetchPosts/>
     <Routes>
      
@@ -19,6 +20,7 @@ function App() {
       
     </Routes>
   </BrowserRouter>
+    </RecoilRoot>
   )
 }
 
