@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from '../src/Layout';
@@ -10,12 +9,14 @@ import Signup from './pages/Signup';
 import EditProfile from './pages/EditProfile';
 import FetchPosts from './components/FetchPosts';
 import ViewPosts from "./pages/ViewPosts";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
-    <BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
     <FetchPosts/>
-      <Routes>
+    <Routes>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Layout><Dashboard /></Layout>} />
@@ -25,6 +26,7 @@ function App() {
         <Route path='/posts' element={<ViewPosts/>}></Route>
       </Routes>
     </BrowserRouter>
+    </RecoilRoot>
   );
 }
 

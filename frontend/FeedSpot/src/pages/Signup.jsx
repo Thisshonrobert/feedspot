@@ -3,6 +3,8 @@ import { FaLock, FaMailBulk } from "react-icons/fa";
 import bg from '../assets/bg.jpg'
 import { Button, Link } from "@radix-ui/themes";
 import { RiAccountBoxLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
   const[user_name,setName] = useState("");
   const [user_email, setEmail] = useState("");
@@ -14,7 +16,7 @@ const Signup = () => {
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
-      <form className="relative z-10 bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-70 rounded-xl p-6 w-full max-w-md mx-4 sm:mx-0" onSubmit={handleLogin}>
+      <form className="relative z-10 bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-70 rounded-xl p-6 w-full max-w-md mx-4 sm:mx-0" >
         <h1 className="text-center text-2xl text-white mb-8">Sigup to FEEDsPOT</h1>
         <div className="space-y-5 mb-6">
         <div className="flex items-center">
@@ -53,13 +55,13 @@ const Signup = () => {
         </div>
         <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]" onClick={async () => {
                     try {
-                        const response = await axios.post("http://localhost:3000/api/v1/users/signup", {
+                        const response = await axios.post("http://localhost:3000/api/v1/signup", {
                         user_name,
                         user_email,
                         password
                         });
                         localStorage.setItem("token", response.data.token);
-                        navigate("/view_products");
+                        navigate("/posts");
                         } catch (error) {
                             if (error.response) {
                             if (error.response.status === 409) {
