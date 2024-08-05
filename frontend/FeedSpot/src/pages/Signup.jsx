@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { FaLock, FaMailBulk } from "react-icons/fa";
-import bg from '../assets/bg.jpg'
 import { Button, Link } from "@radix-ui/themes";
+import React, { useState } from "react";
+import { FaLock, FaMailBulk } from "react-icons/fa";
 import { RiAccountBoxLine } from "react-icons/ri";
+import { RiContactsBook3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import bg from '../assets/bg.jpg';
 
 const Signup = () => {
-  const[user_name,setName] = useState("");
+  const[user_name,setUserName] = useState("");
   const [user_email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  // };
+  const [user_mobileNo,setNumber] =  useState("")
+
+
   const navigate = useNavigate();
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
       <form className="relative z-10 bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-70 rounded-xl p-6 w-full max-w-md mx-4 sm:mx-0" >
-        <h1 className="text-center text-2xl text-white mb-8">Sigup to FEEDsPOT</h1>
+        <h1 className="text-center text-2xl text-white mb-8">Sigup to FEEDSPOT</h1>
         <div className="space-y-5 mb-6">
         <div className="flex items-center">
           <RiAccountBoxLine className="text-white text-xl mr-3" />
@@ -26,7 +27,7 @@ const Signup = () => {
               placeholder="User Name"
              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
               value={user_name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setUserName(e.target.value)}
               defaultValue={""}
               required
             />
@@ -51,14 +52,24 @@ const Signup = () => {
               defaultValue={""}
               required className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3" />
           </div>
+          <div className="flex items-center">
+            <RiContactsBook3Line className="text-white text-xl mr-3" />
+            <input type="number"
+              placeholder="Number" value={user_mobileNo}
+              onChange={(e) => setNumber(e.target.value)}
+              defaultValue={958459383}
+              required className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3" />
+          </div>
 
         </div>
-        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]" onClick={async () => {
+        <div className="ml-[40%]">
+        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit"  onClick={async () => {
                     try {
                         const response = await axios.post("http://localhost:3000/api/v1/signup", {
                         user_name,
                         user_email,
-                        password
+                        password,
+                        user_mobileNo
                         });
                         localStorage.setItem("token", response.data.token);
                         navigate("/posts");
@@ -76,6 +87,8 @@ const Signup = () => {
                         }}>
           Signup
         </Button>
+        </div>
+      
         <div className="text-center text-sm text-white mt-4">
           Already have an account? <Link href="/signin" className="font-semibold hover:underline text-green-600">Login</Link>
         </div>

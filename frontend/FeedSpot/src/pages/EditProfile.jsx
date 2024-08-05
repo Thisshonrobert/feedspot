@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, Card, Flex, Heading, Text, TextArea, TextField, Dialog } from '@radix-ui/themes';
+import { Avatar, Box, Button, Card, Flex, Heading,  TextArea, TextField, Dialog } from '@radix-ui/themes';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
   const [birthdate, setBirthdate] = useState('');
   const [age, setAge] = useState('');
   const [img, setImg] = useState('');
   const [name,setName] = useState('');
-  const [username,setUsername] = useState('')
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newImg, setNewImg] = useState('');
+  const [website,setWebsite] =useState('');
+  const [bio,setBio] = useState(''); 
+
+  const navigate = useNavigate();
 
   const calculateAge = (birthdate) => {
     const birthDate = new Date(birthdate);
@@ -33,6 +37,36 @@ const EditProfile = () => {
     setIsDialogOpen(false);
   };
 
+  const handleSubmit = async()=>{
+    
+      try {
+        const entry = await axios.post('http://localhost:3000/api/v1/addUserDetials', {
+         name:name,
+         user_image:img,
+         user_website:website,
+         user_bio:bio,
+         user_age:age
+        }, {
+          headers: {
+            'Authorization': "Bearer " + localStorage.getItem('token')
+          },
+        });
+  
+        if(entry)
+        {
+          toast.success("Edited Successfully");
+          setTimeout(()=>{
+            window.location.reload();
+          },2000)
+        }
+        // Handle success or navigate to a different page
+       navigate('/')
+      } catch (error) {
+        console.error('Error uploading product:', error);
+      }
+    
+  }
+
   return (
     <div className='py-4 pl-[12%]'>
       <Card className='max-w-4xl'>
@@ -53,9 +87,6 @@ const EditProfile = () => {
                           onChange={(e) => setName(e.target.value)}
                           placeholder="Enter name"/>
                       
-                      <TextField.Root radius='full' className='h-6' value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                          placeholder="Enter username"/>
                   </Box>
                 </Flex>
                 <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -92,9 +123,9 @@ const EditProfile = () => {
             </Card>
           </Box>
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Website</Heading>
-          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 ' />
+          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 ' onChange={(e) => setWebsite(e.target.value)}/>
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Bio</Heading>
-          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4' />
+          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4' onChange={(e) => setBio(e.target.value)}/>
           <Flex align='center' justify='between'>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Your Birthday</Heading>
@@ -115,7 +146,9 @@ const EditProfile = () => {
               />
             </Box>
           </Flex>
-          <Button size='3' radius='full' className='mt-8 px-[10%] ml-56'>Submit</Button>
+          <Box className='mt-8 px-[10%] ml-[38%]'>   
+                   <Button size='3' radius='full' onClick={()=>handleSubmit}>Submit</Button>
+          </Box>
         </Box>
       </Card>
     </div>

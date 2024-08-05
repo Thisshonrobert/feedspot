@@ -10,10 +10,7 @@ const Signin = () => {
   const navigate = useNavigate();
 
 
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  
-  // };
+
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
@@ -42,8 +39,9 @@ const Signin = () => {
           </div>
 
         </div>
-        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit" className="ml-[40%]" onClick={ async () => {
-            const response = await axios.post("http://localhost:3000/api/v1/users/signin", {
+        <div className="ml-[40%]">
+        <Button align='center' size='4' color="cyan" variant="soft"  gap='3' type="submit"  onClick={ async () => {
+            const response = await axios.post("http://localhost:3000/api/v1/signin", {
               user_name,
               password
             });       
@@ -53,6 +51,7 @@ const Signin = () => {
             }}>
           Login
         </Button>
+        </div>
         <div className="text-center text-sm text-white mt-4">
           Don't have an account? <Link href="/signup" className="font-semibold hover:underline text-red-600">Register</Link>
         </div>

@@ -1,6 +1,18 @@
 import { Avatar, Box, Button, Card, Flex, Heading, Text, TextArea, TextField } from '@radix-ui/themes';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios"
+
+const [detials,setDetials] = useState({}) 
+
+useEffect(()=>{
+axios.get('http://localhost:3000/api/v1/user_details',{
+  headers:{
+    'Authorization': "Bearer " + localStorage.getItem('token')
+  }
+}).then((res)=>setDetials(res.data.details))
+},[])
+
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -15,16 +27,16 @@ const Profile = () => {
                 <Flex gap="3" align="center">
                   <Avatar
                     size="3"
-                    src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop"
+                    src={detials.user_image}
                     radius="full"
                     fallback="T"
                   />
                   <Box>
                     <Text as="div" size="2" weight="bold">
-                      {'Name'}
+                      {detials.name}
                     </Text>
                     <Text as="div" size="2" color="gray">
-                      {'Username'}
+                      {detials.user_name}
                     </Text>
                   </Box>
                 </Flex>
@@ -32,29 +44,32 @@ const Profile = () => {
               </Flex>
             </Card>
           </Box>
-          <Heading color='gray' as='h2' weight='medium' className='mb-2'>Website</Heading>
-          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 bg-gray-100' />
+          <Heading color='gray' as='h2' weight='medium' className='mb-2'  >Website</Heading>
+          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 bg-gray-100' value={detials.user_website}/>
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Bio</Heading>
-          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4 bg-gray-100' />
+          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4 bg-gray-100' value={detials.user_bio}/>
           <Flex align='center' justify='between'>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Your Birthday</Heading>
               <TextField.Root 
                 className='border rounded-lg outline-none w-56 bg-gray-100'
-                value={'09/09/3003'}
+                placeholder={'09/09/3003'}
               />
             </Box>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Age</Heading>
               <TextField.Root 
                 className='border rounded-lg outline-none w-24 bg-gray-100'
-                value={'1'}
+                value={detials.user_age}
                 readOnly
               />
             </Box>
           </Flex>
-          <Button onClick={()=>navigate('/editprofile')} size='3' radius='full' className='mt-8 px-[10%] ml-56'>Edit Profile</Button>
+          <Box className='mt-8 px-[10%] ml-[38%]'>
+        <Button  onClick={()=>navigate('/editprofile')} size='4' radius='full' >Edit</Button>
         </Box>
+        </Box>
+        
       </Card>
     </div>
   );

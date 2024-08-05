@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
+
 mongoose.connect("mongodb+srv://learning:GNO0z745ZWvgVARG@cluster0.stznz.mongodb.net/linkedin");
+
 
 const userSchema = new mongoose.Schema({
     user_name:{
@@ -9,12 +11,13 @@ const userSchema = new mongoose.Schema({
         uppercase:true
     },
     user_image:{
-        data:buffer,
-        contentType:String
+        // data:buffer,
+        // contentType:String
+        type:String
     },
     user_age:{
         type:Number,
-        required:true
+        
     },
     user_mobileNo:{
         type:Number,
@@ -31,7 +34,18 @@ const userSchema = new mongoose.Schema({
         required:true,
         lowercase:true,
         uppercase:true
+    },
+    user_website:{
+        type:String
+    },
+    user_bio:{
+        type:String
+    },
+    name:{
+        type:String
     }
+
+
 },{timestamps:true})
 
 const postSchema = new mongoose.Schema({
@@ -44,8 +58,9 @@ const postSchema = new mongoose.Schema({
         required:true
     },
     post_url:{
-        data:buffer,
+        data:Buffer,
         contentType:String
+    
     },
     likes_count:{
         type:Number,
