@@ -3,19 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 
-const [detials,setDetials] = useState({}) 
-
-useEffect(()=>{
-axios.get('http://localhost:3000/api/v1/user_details',{
-  headers:{
-    'Authorization': "Bearer " + localStorage.getItem('token')
-  }
-}).then((res)=>setDetials(res.data.details))
-},[])
-
-
 const Profile = () => {
+  const [detials,setDetials] = useState({}) 
   const navigate = useNavigate();
+  useEffect(()=>{
+    axios.get('http://localhost:3000/api/v1/user_details',{
+      headers:{
+        'Authorization': "Bearer " + localStorage.getItem('token')
+      }
+    }).then((res)=>setDetials(res.data.details))
+    },[])
+    
   return (
     <div className='py-4 pl-[12%]'>
       <Card className='max-w-4xl'>

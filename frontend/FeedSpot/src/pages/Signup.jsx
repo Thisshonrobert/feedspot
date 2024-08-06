@@ -18,7 +18,7 @@ const Signup = () => {
   return (
     <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
       <form className="relative z-10 bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-70 rounded-xl p-6 w-full max-w-md mx-4 sm:mx-0" >
-        <h1 className="text-center text-2xl text-white mb-8">Sigup to FEEDSPOT</h1>
+        <h1 className="text-center text-2xl text-white mb-8">Sigup to FeedSpot</h1>
         <div className="space-y-5 mb-6">
         <div className="flex items-center">
           <RiAccountBoxLine className="text-white text-xl mr-3" />
