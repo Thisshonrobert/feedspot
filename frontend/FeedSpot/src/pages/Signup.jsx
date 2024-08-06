@@ -9,7 +9,7 @@ import bg from '../assets/bg.jpg';
 const Signup = () => {
   const [user_name,setUserName] = useState("");
   const [user_email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user_password, setPassword] = useState("");
   const [user_mobileNo,setNumber] =  useState("");
 
 
@@ -47,7 +47,7 @@ const Signup = () => {
           <div className="flex items-center">
             <FaLock className="text-white text-xl mr-3" />
             <input type="password"
-              placeholder="Password" value={password}
+              placeholder="Password" value={user_password}
               onChange={(e) => setPassword(e.target.value)}
               defaultValue={""}
               required className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3" />

@@ -7,7 +7,7 @@ import Profile from './pages/Profile';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import EditProfile from './pages/EditProfile';
-import FetchPosts from './components/FetchPosts';
+// import FetchPosts from './components/FetchPosts';
 import ViewPosts from "./pages/ViewPosts";
 import { RecoilRoot } from "recoil";
 
@@ -15,7 +15,7 @@ function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-    <FetchPosts/>
+    {/* <FetchPosts/> */}
     <Routes>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
