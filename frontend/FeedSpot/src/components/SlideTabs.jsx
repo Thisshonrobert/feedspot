@@ -27,7 +27,7 @@ const SlideTabs = () => {
             }}
             className="relative mx-auto flex w-fit rounded-full border-2 border-black bg-white p-1"
         >
-            <Tab setPosition={setPosition} to="/">Dashboard</Tab>
+            <Tab setPosition={setPosition} to="/posts">Posts</Tab>
             <Tab setPosition={setPosition} to="/profile">Profile</Tab>
             <Tab setPosition={setPosition} to="/newpost">New Post</Tab>
 

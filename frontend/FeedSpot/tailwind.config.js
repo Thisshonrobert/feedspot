@@ -12,8 +12,13 @@ export default {
         200: '2',
       }, 
       fontFamily: {
-        'playwrite': ['Playwrite België Vlaams Gewest']
-      }
+        'playwrite': ['Playwrite België Vlaams Gewest'],
+        'Inter':['Inter']
+      },
+     backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
     },
   },
   plugins: [],

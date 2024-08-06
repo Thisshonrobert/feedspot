@@ -35,14 +35,17 @@ rootRouter.post('/signup', async (req, res) => {
 })
 
 rootRouter.post('/signin', async (req, res) => {
-    const user = req.body
-    const { success } = signinValidateObj.safeParse(user);
+    const { user_email, user_password } = req.body;
+    const { success } = signinValidateObj.safeParse({ user_email, user_password });
     if (!success) {
         return res.status(422).json({
             msg: "Incorrect inputs"
         })
     }
-    const currentUser = await Users.findOne(user)
+    const currentUser = await Users.findOne({user_email,user_password})
+    if (!currentUser) {
+        return res.status(401).json({ msg: "Invalid credentials" });
+    }
     const userId = currentUser._id
     if (currentUser) {
         const token = jwt.sign({ userId }, PASSWORD)

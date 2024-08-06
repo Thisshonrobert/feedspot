@@ -4,7 +4,7 @@ import Post from '../components/Post';
 import { PostsAtom } from '../store/atoms/PostAtom';
 import ClockLoader from "react-spinners/ClockLoader";
 
-export default function ViewPosts() {
+const ViewPosts=()=> {
   const PostsLoadable = useRecoilValueLoadable(PostsAtom);
 
   switch (PostsLoadable.state) {
@@ -14,7 +14,7 @@ export default function ViewPosts() {
       const posts = PostsLoadable.contents;
 
       return (
-        <div className='p-5 bg-slate-200'>
+        <div>
             {posts.map((post) => (
                 <Post key={post._id} product={post} />
             ))}
@@ -26,3 +26,4 @@ export default function ViewPosts() {
       return null; // Handle other cases if needed
   }
 }
+export default ViewPosts;
