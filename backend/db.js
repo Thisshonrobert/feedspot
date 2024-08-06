@@ -44,8 +44,6 @@ const userSchema = new mongoose.Schema({
     name:{
         type:String
     }
-
-
 },{timestamps:true})
 
 const postSchema = new mongoose.Schema({

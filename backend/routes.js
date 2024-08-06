@@ -8,7 +8,6 @@ const upload = multer();
 const rootRouter = express.Router()
 const PASSWORD = "confidential"
 
-
 rootRouter.post('/signup', async (req, res) => {
     const user = req.body
     const { success } = userValidateObj.safeParse(user)
@@ -119,7 +118,6 @@ rootRouter.get('/user_details', authMiddleware, async (req, res) => {
         user_website: userdetails.user_website,
         user_bio: userdetails.user_bio,
         user_age: userdetails.user_age
-
     }
     return res.json({
         details
@@ -143,3 +141,5 @@ rootRouter.put('/addUserDetials', authMiddleware, async (req, res) => {
     })
 
 })
+
+module.exports = rootRouter

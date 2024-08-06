@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 import bg from '../assets/bg.jpg';
 
 const Signup = () => {
-  const[user_name,setUserName] = useState("");
+  const [user_name,setUserName] = useState("");
   const [user_email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user_mobileNo,setNumber] =  useState("")
+  const [user_mobileNo,setNumber] =  useState("");
 
 
   const navigate = useNavigate();
