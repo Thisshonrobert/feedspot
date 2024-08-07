@@ -1,16 +1,16 @@
 import React from 'react';
-import Navbar from './components/Navbar';
+import Navbar from './component/Navbar';
 import { Container, Theme } from '@radix-ui/themes';
-
+import {ThemeProvider} from "@/components/theme-provider"
 
 const Layout = ({ children }) => {
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
     <Navbar />
     <Container>
-      
       <main>{children}</main>
-    </Container></>
+    </Container>
+    </ThemeProvider>
     
   );
 };

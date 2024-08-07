@@ -1,10 +1,13 @@
-import React from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-import Post from '../components/Post';
+import Post from '../component/Post';
 import { PostsAtom } from '../store/atoms/PostAtom';
 import ClockLoader from "react-spinners/ClockLoader";
+import ProfileCard from '@/component/ProfileCard';
+import { ScrollArea } from "@/components/ui/scroll-area";
+import InputPost from '@/component/InputPost';
 
-const ViewPosts=()=> {
+
+const ViewPosts = () => {
   const PostsLoadable = useRecoilValueLoadable(PostsAtom);
 
   switch (PostsLoadable.state) {
@@ -14,10 +17,18 @@ const ViewPosts=()=> {
       const posts = PostsLoadable.contents;
 
       return (
-        <div>
-            {posts.map((post) => (
+        <div className="flex h-screen">
+          <div className="w-1/4">
+            <ProfileCard />
+          </div>
+          <div className="flex-1 p-4">
+            <ScrollArea className="rounded-md border-black  h-full">
+             <InputPost></InputPost>
+              {/* {posts.map((post) => (
                 <Post key={post._id} product={post} />
-            ))}
+              ))} */}
+            </ScrollArea>
+          </div>
         </div>
       );
     case 'hasError':
@@ -26,4 +37,5 @@ const ViewPosts=()=> {
       return null; // Handle other cases if needed
   }
 }
+
 export default ViewPosts;

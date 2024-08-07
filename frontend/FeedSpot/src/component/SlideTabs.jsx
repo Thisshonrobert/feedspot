@@ -29,7 +29,6 @@ const SlideTabs = () => {
         >
             <Tab setPosition={setPosition} to="/posts">Posts</Tab>
             <Tab setPosition={setPosition} to="/profile">Profile</Tab>
-            <Tab setPosition={setPosition} to="/newpost">New Post</Tab>
 
             <Cursor position={position} />
         </ul>

@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { FaLock, FaMailBulk } from "react-icons/fa";
-import bg from '../assets/bg2.jpg';
 import { useNavigate } from "react-router-dom";
-import { Button, Link } from "@radix-ui/themes";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom"; 
 
 const Signin = () => {
   const [user_email, setEmail] = useState("");
@@ -13,8 +21,8 @@ const Signin = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-  console.log(user_email,user_password)
+    e.preventDefault();
+    console.log(user_email, user_password);
 
     // Basic validation
     if (!user_email || !user_password) {
@@ -25,11 +33,11 @@ const Signin = () => {
     try {
       const response = await axios.post("http://localhost:3000/api/v1/signin", {
         user_email,
-        user_password
+        user_password,
       });
       localStorage.setItem("token", response.data.token);
       navigate("/posts");
-      console.log(response)
+      console.log(response);
     } catch (error) {
       if (error.response && error.response.status === 422) {
         toast.error("Invalid email or password.");
@@ -40,43 +48,50 @@ const Signin = () => {
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
-      <form className="relative z-10 bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-70 rounded-xl p-6 w-full max-w-md mx-4 sm:mx-0" onSubmit={handleSubmit}>
-        <h1 className="text-center text-2xl text-white mb-8">Login to FeedSpot</h1>
-        <div className="space-y-5 mb-6">
-          <div className="flex items-center">
-            <FaMailBulk className="text-white text-xl mr-3" />
-            <input
-              type="email"
-              placeholder="Email ID"
-              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={user_email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+    <div className="p-16  text-gray-200 min-h-screen flex items-center justify-center">
+      <Card className="mx-auto max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-xl">Sign In</CardTitle>
+          <CardDescription>
+            Enter your credentials to access your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form className="grid gap-4" onSubmit={handleSubmit}>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                value={user_email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={user_password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
+          </form>
+          <div className="mt-4 text-center text-sm">
+            Don't have an account?{" "}
+            <Link to="/signup" className="underline">
+              Register
+            </Link>
           </div>
-          <div className="flex items-center">
-            <FaLock className="text-white text-xl mr-3" />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={user_password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        <div className="ml-[40%]">
-          <Button align='center' size='4' color="cyan" variant="soft" gap='3' type="submit">
-            Login
-          </Button>
-        </div>
-        <div className="text-center text-sm text-white mt-4">
-          Don't have an account? <Link href="/signup" className="font-semibold hover:underline text-red-600">Register</Link>
-        </div>
-      </form>
-      <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+        </CardContent>
+      </Card>
       <ToastContainer />
     </div>
   );

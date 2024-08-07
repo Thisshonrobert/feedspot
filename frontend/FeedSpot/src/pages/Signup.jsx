@@ -1,14 +1,23 @@
-import { Button, Link } from "@radix-ui/themes";
-import React, { useState } from "react";
-import { FaLock, FaMailBulk } from "react-icons/fa";
-import { RiAccountBoxLine, RiContactsBook3Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
-import bg from '../assets/bg.jpg';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [user_name, setUserName] = useState("");
+  const [firstName,setFirstName] = useState("")
+  const [lastName,setLastName] = useState("")
+
   const [user_email, setEmail] = useState("");
   const [user_password, setPassword] = useState("");
   const [user_mobileNo, setNumber] = useState("");
@@ -17,6 +26,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUserName(firstName+lastName)
+    console.log(user_name)
     try {
       const response = await axios.post("http://localhost:3000/api/v1/signup", {
         user_name,
@@ -26,7 +37,7 @@ const Signup = () => {
       });
       localStorage.setItem("token", response.data.token);
       console.log(response);
-      navigate("/posts");
+      navigate("/editprofile");
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
@@ -41,65 +52,82 @@ const Signup = () => {
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center bg-cover bg-center brightness-175" style={{ backgroundImage: `url(${bg})` }}>
-      <form className="relative z-10 bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-70 rounded-xl p-6 w-full max-w-md mx-4 sm:mx-0" onSubmit={handleSubmit}>
-        <h1 className="text-center text-2xl text-white mb-8">Signup to FeedSpot</h1>
-        <div className="space-y-5 mb-6">
-          <div className="flex items-center">
-            <RiAccountBoxLine className="text-white text-xl mr-3" />
-            <input
-              type="text"
-              placeholder="User Name"
-              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={user_name}
-              onChange={(e) => setUserName(e.target.value)}
-              required
-            />
+    <div className="p-16  text-gray-200 min-h-screen flex items-center justify-center">
+      <Card className="mx-auto max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardDescription>
+            Enter your information to create an account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form className="grid gap-4" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="first-name">First name</Label>
+                <Input 
+                  id="first-name" 
+                  placeholder="Max" 
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required 
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="last-name">Last name</Label>
+                <Input 
+                  id="last-name" 
+                  placeholder="Robinson" 
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required 
+                />
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                value={user_email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input 
+                id="password" 
+                type="password" 
+                value={user_password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="mobileNo">Mobile Number</Label>
+              <Input 
+                id="mobileNo" 
+                type="number" 
+                placeholder="1234567890" 
+                value={user_mobileNo}
+                onChange={(e) => setNumber(e.target.value)}
+                required 
+              />
+            </div>
+            <Button type="submit" className="w-full">
+              Create an account
+            </Button>
+          </form>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link to="/signin" className="underline">
+              Sign in
+            </Link>
           </div>
-          <div className="flex items-center">
-            <FaMailBulk className="text-white text-xl mr-3" />
-            <input
-              type="email"
-              placeholder="Email ID"
-              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={user_email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex items-center">
-            <FaLock className="text-white text-xl mr-3" />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={user_password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex items-center">
-            <RiContactsBook3Line className="text-white text-xl mr-3" />
-            <input
-              type="number"
-              placeholder="Number"
-              className="w-full bg-transparent backdrop-blur-lg border outline-none border-white text-white border-opacity-70 rounded-full px-5 py-3"
-              value={user_mobileNo}
-              onChange={(e) => setNumber(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        <div className="ml-[30%]">
-          <Button align='center' size='4' color="cyan" variant="soft" gap='3' type="submit">
-            Create Account
-          </Button>
-        </div>
-        <div className="text-center text-sm text-white mt-4">
-          Already have an account? <Link href="/signin" className="font-semibold hover:underline text-green-600">Login</Link>
-        </div>
-      </form>
-      <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

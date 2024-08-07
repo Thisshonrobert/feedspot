@@ -1,9 +1,9 @@
-import { Avatar, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes';
-import React from 'react';
+import { ModeToggle } from '@/components/mode-toggle';
+import { Container, Flex, Text } from '@radix-ui/themes';
 import { GiButterfly } from "react-icons/gi";
 import { useLocation } from 'react-router-dom';
-import {SlideTabsExample} from './SlideTabs'; // Import the SlideTabs component
-import StaggeredDropDown from './StaggeredDropdown'
+import { SlideTabsExample } from './SlideTabs'; // Import the SlideTabs component
+import StaggeredDropDown from './StaggeredDropdown';
 const NavBar = () => {
   const location = useLocation();
   return (
@@ -15,6 +15,7 @@ const NavBar = () => {
             <Text className="font-playwrite font-semibold text-2xl">FeedSpot</Text>
           </Flex>
           <SlideTabsExample />
+          <ModeToggle/>
           <StaggeredDropDown/>
         </Flex>
       </Container>

@@ -1,6 +1,6 @@
 import React from "react";
-import MultiLayerParallax from "../components/MultiLayerParallex";
-import { AuroraHero } from "../components/AuroraHero";
+import MultiLayerParallax from "../component/MultiLayerParallex";
+import { AuroraHero } from "../component/AuroraHero";
 
 function App() {
   return (
