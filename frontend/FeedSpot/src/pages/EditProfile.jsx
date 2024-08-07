@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, Card, Flex, Heading,  TextArea, TextField, Dialog } from '@radix-ui/themes';
+import { Avatar, Box, Button, Card, Flex, Heading, TextArea, TextField, Dialog } from '@radix-ui/themes';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const EditProfile = () => {
   const [birthdate, setBirthdate] = useState('');
   const [age, setAge] = useState('');
   const [img, setImg] = useState('');
-  const [name,setName] = useState('');
+  const [name, setName] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newImg, setNewImg] = useState('');
-  const [website,setWebsite] =useState('');
-  const [bio,setBio] = useState(''); 
+  const [website, setWebsite] = useState('');
+  const [bio, setBio] = useState(''); 
 
   const navigate = useNavigate();
 
@@ -37,35 +39,31 @@ const EditProfile = () => {
     setIsDialogOpen(false);
   };
 
-  const handleSubmit = async()=>{
-    
-      try {
-        const entry = await axios.post('http://localhost:3000/api/v1/addUserDetials', {
-         name:name,
-         user_image:img,
-         user_website:website,
-         user_bio:bio,
-         user_age:age
-        }, {
-          headers: {
-            'Authorization': "Bearer " + localStorage.getItem('token')
-          },
-        });
-  
-        if(entry)
-        {
-          toast.success("Edited Successfully");
-          setTimeout(()=>{
-            window.location.reload();
-          },2000)
-        }
-        // Handle success or navigate to a different page
-       navigate('/')
-      } catch (error) {
-        console.error('Error uploading product:', error);
+  const handleSubmit = async () => {
+    try {
+      const entry = await axios.post('http://localhost:3000/api/v1/addUserDetials', {
+        name: name,
+        user_image: img,
+        user_website: website,
+        user_bio: bio,
+        user_age: age
+      }, {
+        headers: {
+          'Authorization': "Bearer " + localStorage.getItem('token')
+        },
+      });
+
+      if (entry) {
+        toast.success("Edited Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
-    
-  }
+      navigate('/');
+    } catch (error) {
+      console.error('Error uploading product:', error);
+    }
+  };
 
   return (
     <div className='py-4 pl-[12%]'>
@@ -84,9 +82,8 @@ const EditProfile = () => {
                   />
                   <Box>
                     <TextField.Root className='mb-2 h-6' radius='full' value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="Enter name"/>
-                      
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter name" />
                   </Box>
                 </Flex>
                 <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -99,13 +96,11 @@ const EditProfile = () => {
                       Enter the URL of the new profile photo.
                     </Dialog.Description>
                     <Flex direction="column" gap="3">
-                  
-                        <TextField.Root
-                          value={newImg}
-                          onChange={(e) => setNewImg(e.target.value)}
-                          placeholder="Enter image URL"
-                        />
-                      
+                      <TextField.Root
+                        value={newImg}
+                        onChange={(e) => setNewImg(e.target.value)}
+                        placeholder="Enter image URL"
+                      />
                     </Flex>
                     <Flex gap="3" mt="4" justify="end">
                       <Dialog.Close asChild>
@@ -123,31 +118,31 @@ const EditProfile = () => {
             </Card>
           </Box>
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Website</Heading>
-          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 ' onChange={(e) => setWebsite(e.target.value)}/>
+          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 ' onChange={(e) => setWebsite(e.target.value)} />
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Bio</Heading>
-          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4' onChange={(e) => setBio(e.target.value)}/>
+          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4' onChange={(e) => setBio(e.target.value)} />
           <Flex align='center' justify='between'>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Your Birthday</Heading>
               <input
                 type='date'
-                className='border rounded-lg outline-none w-56'
+                className='border border-gray-300 rounded-lg text-neutral-600 w-56 p-2 bg-white dark:bg-neutral-900 dark:border-gray-700'
                 value={birthdate}
                 onChange={handleBirthdateChange}
               />
             </Box>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Age</Heading>
-              <input
+              <TextField.Root
                 type='text'
-                className='border rounded-lg outline-none w-24'
+                className='border border-gray-300 rounded-lg w-24 text-neutral-600 bg-white dark:bg-neutral-900 dark:border-gray-700'
                 value={age}
                 readOnly
               />
             </Box>
           </Flex>
-          <Box className='mt-8 px-[10%] ml-[38%]'>   
-                   <Button size='3' radius='full' onClick={()=>handleSubmit}>Submit</Button>
+          <Box className='mt-8 px-[10%] ml-[38%]'>
+            <Button size='3' radius='full' onClick={handleSubmit}>Submit</Button>
           </Box>
         </Box>
       </Card>
