@@ -67,3 +67,21 @@
     @apply bg-background text-foreground;
   }
 }
+.image-container {
+  display: flex;
+  justify-content: center; /* Centers the image horizontally */
+  align-items: center;     /* Centers the image vertically */
+  width: 100%;             /* Ensures the container takes full width */
+  height: 300px;           /* Set a fixed height to make the image larger */
+  overflow: hidden;        /* Hides overflow to maintain aspect ratio */
+  border-radius: 10px;   
+     /* Adds a bit of rounding to the corners */
+}
+
+.post-image {
+  width: 100%;             /* Ensures the image takes up the full width of the container */
+  height: 100%;            /* Ensures the image takes up the full height of the container */
+  object-fit: contain;     /* Ensures the entire image fits within the container without being cropped */
+  margin: auto;            /* Centers the image within its container */
+}
+
