@@ -43,6 +43,7 @@ const Option = ({ text, Icon, setOpen }) => {
     if (text === "Github") {
       window.location.href = "https://github.com/";
     } else if (text === "Signout") {
+      localStorage.clear();
       navigate("/signin");
     }
     

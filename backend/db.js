@@ -7,8 +7,7 @@ const userSchema = new mongoose.Schema({
     user_name:{
         type:String,
         required:true,
-        lowercase:true,
-        uppercase:true
+        lowercase:true
     },
     user_image:{
         // data:buffer,
@@ -16,24 +15,20 @@ const userSchema = new mongoose.Schema({
         type:String
     },
     user_age:{
-        type:Number,
-        
+        type:Number
     },
     user_mobileNo:{
-        type:Number,
+        type:String,
         required:true
     },
     user_email:{
         type:String,
         required:true,
-        lowercase:true,
-        uppercase:false
+        lowercase:true
     },
     user_password:{
         type:String,
-        required:true,
-        lowercase:true,
-        uppercase:true
+        required:true
     },
     user_website:{
         type:String

@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 // import FetchPosts from './components/FetchPosts';
 import { RecoilRoot } from "recoil";
 import ViewPosts from "./pages/ViewPosts";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -23,6 +24,18 @@ function App() {
         <Route path='/editprofile' element={<Layout><EditProfile/></Layout>}/>
       </Routes>
     </BrowserRouter>
+    <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </RecoilRoot>
   );
 }

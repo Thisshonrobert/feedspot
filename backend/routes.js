@@ -127,22 +127,31 @@ rootRouter.get('/user_details', authMiddleware, async (req, res) => {
     })
 })
 
-rootRouter.put('/addUserDetials', authMiddleware, async (req, res) => {
+rootRouter.put('/addUserDetials', authMiddleware, (req, res) => {
     const userdetails = req.body;
-    Users.updateOne({ _id: userId }, {
-        "$push": {
-            name: userdetails.name,
-            user_image: userdetails.user_image,
-            user_website: userdetails.user_website,
-            user_bio: userdetails.user_bio,
-            user_age: userdetails.user_age
-        }
-    }).then(() => {
-        res.json({
-            msg: "userDetials Updated"
-        })
-    })
 
-})
+    Users.updateOne(
+        { _id: req.userId },
+        {
+            "$set": {
+                name: userdetails.name,
+                user_image: userdetails.user_image,
+                user_website: userdetails.user_website,
+                user_bio: userdetails.user_bio,
+                user_age: parseInt(userdetails.user_age)
+            }
+        }
+    ).then(() => {
+        res.json({
+            msg: "User details updated"
+        });
+    }).catch((error) => { // Error handling
+        res.status(500).json({
+            msg: "Error updating user details",
+            error: error.message
+        });
+    });
+});
+
 
 module.exports = rootRouter

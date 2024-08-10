@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Box, Button, Card, Flex, Heading,  TextArea, TextField, Dialog } from '@radix-ui/themes';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const EditProfile = () => {
   const [birthdate, setBirthdate] = useState('');
@@ -37,8 +38,8 @@ const EditProfile = () => {
     setIsDialogOpen(false);
   };
 
-  const handleSubmit = async()=>{
-    
+  const handleSubmit = async(e)=>{
+      e.preventDefault();
       try {
         const entry = await axios.post('http://localhost:3000/api/v1/addUserDetials', {
          name:name,

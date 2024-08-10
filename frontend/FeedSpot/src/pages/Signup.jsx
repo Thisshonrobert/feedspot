@@ -14,7 +14,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Signup = () => {
-  const [user_name, setUserName] = useState("");
   const [firstName,setFirstName] = useState("")
   const [lastName,setLastName] = useState("")
 
@@ -26,7 +25,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUserName(firstName+lastName)
+    const user_name = firstName + lastName
     console.log(user_name)
     try {
       const response = await axios.post("http://localhost:3000/api/v1/signup", {
