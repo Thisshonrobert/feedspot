@@ -122,7 +122,7 @@ rootRouter.get("/myposts", authMiddleware, async (req, res) => {
 });
 
 rootRouter.get("/user_details", authMiddleware, async (req, res) => {
-  const userdetails = await Users.find({ _id: req.userId });
+  const userdetails = await Users.findOne({ _id: req.userId });
   const details = {
     user_name: userdetails.user_name,
     name: userdetails.name,
@@ -140,9 +140,9 @@ rootRouter.get("/user_details", authMiddleware, async (req, res) => {
 rootRouter.put("/addUserDetials", authMiddleware, async (req, res) => {
   const userdetails = req.body;
   Users.updateOne(
-    { _id: userId },
+    { _id: req.userId },
     {
-      $push: {
+      $set: {
         name: userdetails.name,
         user_image: userdetails.user_image,
         user_website: userdetails.user_website,

@@ -42,7 +42,7 @@ const EditProfile = () => {
   const handleSubmit = async(e)=>{
       e.preventDefault();
       try {
-        const entry = await axios.post('http://localhost:3000/api/v1/addUserDetials', {
+        const entry = await axios.put('http://localhost:3000/api/v1/addUserDetials', {
          name:name,
          user_image:img,
          user_website:website,
@@ -50,7 +50,8 @@ const EditProfile = () => {
          user_age:age
         }, {
           headers: {
-            'Authorization': "Bearer " + localStorage.getItem('token')
+            'Content-Type': 'multipart/form-data',
+            "Authorization" : "Bearer " + localStorage.getItem('token')
           },
         });
   
@@ -62,9 +63,9 @@ const EditProfile = () => {
           },2000)
         }
         // Handle success or navigate to a different page
-       navigate('/')
+       navigate('/posts')
       } catch (error) {
-        console.error('Error uploading product:', error);
+        console.error('Error uploading details:', error);
       }
     
   }
