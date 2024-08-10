@@ -24,7 +24,7 @@ const StaggeredDropDown = () => {
           initial={wrapperVariants.closed}
           variants={wrapperVariants}
           style={{ originY: "top", translateX: "-50%" }}
-          className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-[120%] left-[50%] w-42 overflow-hidden"
+          className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-[120%] left-[50%] w-46 overflow-hidden z-50"
         >
           <Option setOpen={setOpen} Icon={FiEdit} text="Logined as" />
           <Option setOpen={setOpen} Icon={FaGithub} text="Github" />

@@ -1,41 +1,50 @@
-import { useRecoilValueLoadable } from 'recoil';
-import Post from '../component/Post';
-import { PostsAtom } from '../store/atoms/PostAtom';
-import ClockLoader from "react-spinners/ClockLoader";
-import ProfileCard from '@/component/ProfileCard';
+import InputPost from "@/component/InputPost";
+import ProfileCard from "@/component/ProfileCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import InputPost from '@/component/InputPost';
+import ClockLoader from "react-spinners/ClockLoader";
+import { useRecoilValueLoadable } from "recoil";
+import { PostsAtom } from "../store/atoms/PostAtom";
+import Post from "@/component/Post";
+import RecentUsers from "@/component/RecentUsers";
 
 
 const ViewPosts = () => {
   const PostsLoadable = useRecoilValueLoadable(PostsAtom);
 
   switch (PostsLoadable.state) {
-    case 'loading':
-      return <div className='h-screen flex justify-center items-center'><ClockLoader color="#36d7b7" /></div>;
-    case 'hasValue':
+    case "loading":
+      return (
+        <div className="h-screen flex justify-center items-center">
+          <ClockLoader color="#36d7b7" />
+        </div>
+      );
+    case "hasValue":
       const posts = PostsLoadable.contents;
 
       return (
-        <div className="flex h-screen">
-          <div className="w-1/4">
+        <div className="flex h-screen ">
+          <div className="w-1/4 ml-3 flex flex-col space-y-6">
             <ProfileCard />
+            <RecentUsers/> 
           </div>
+
           <div className="flex-1 p-4">
             <ScrollArea className="rounded-md border-black  h-full">
-             <InputPost></InputPost>
+              <InputPost />
+              <Post />
               {/* {posts.map((post) => (
-                <Post key={post._id} product={post} />
+                <Post key={post._id}/>
               ))} */}
+              <Post />
             </ScrollArea>
           </div>
         </div>
       );
-    case 'hasError':
+    case "hasError":
       return <div>Error loading posts</div>;
     default:
       return null; // Handle other cases if needed
   }
-}
+};
 
 export default ViewPosts;
