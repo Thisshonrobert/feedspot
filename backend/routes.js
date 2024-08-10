@@ -186,6 +186,7 @@ rootRouter.get("/like:id", authMiddleware, async (req, res) => {
   }
 });
 
+
 rootRouter.get("/recent-three", authMiddleware, async (req, res) => {
   try {
     const recentUsers = await Users.find({}).sort({ createdAt: -1 }).limit(3);
@@ -194,6 +195,32 @@ rootRouter.get("/recent-three", authMiddleware, async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: "Failed to fetch recent users" });
   }
+});
+
+rootRouter.put('/addUserDetials', authMiddleware, (req, res) => {
+    const userdetails = req.body;
+
+    Users.updateOne(
+        { _id: req.userId },
+        {
+            "$set": {
+                name: userdetails.name,
+                user_image: userdetails.user_image,
+                user_website: userdetails.user_website,
+                user_bio: userdetails.user_bio,
+                user_age: parseInt(userdetails.user_age)
+            }
+        }
+    ).then(() => {
+        res.json({
+            msg: "User details updated"
+        });
+    }).catch((error) => { // Error handling
+        res.status(500).json({
+            msg: "Error updating user details",
+            error: error.message
+        });
+    });
 });
 
 module.exports = rootRouter;

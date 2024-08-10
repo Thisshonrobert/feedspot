@@ -39,31 +39,35 @@ const EditProfile = () => {
     setIsDialogOpen(false);
   };
 
-  const handleSubmit = async () => {
-    try {
-      const entry = await axios.post('http://localhost:3000/api/v1/addUserDetials', {
-        name: name,
-        user_image: img,
-        user_website: website,
-        user_bio: bio,
-        user_age: age
-      }, {
-        headers: {
-          'Authorization': "Bearer " + localStorage.getItem('token')
-        },
-      });
-
-      if (entry) {
-        toast.success("Edited Successfully");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+  const handleSubmit = async(e)=>{
+      e.preventDefault();
+      try {
+        const entry = await axios.post('http://localhost:3000/api/v1/addUserDetials', {
+         name:name,
+         user_image:img,
+         user_website:website,
+         user_bio:bio,
+         user_age:age
+        }, {
+          headers: {
+            'Authorization': "Bearer " + localStorage.getItem('token')
+          },
+        });
+  
+        if(entry)
+        {
+          toast.success("Edited Successfully");
+          setTimeout(()=>{
+            window.location.reload();
+          },2000)
+        }
+        // Handle success or navigate to a different page
+       navigate('/')
+      } catch (error) {
+        console.error('Error uploading product:', error);
       }
-      navigate('/');
-    } catch (error) {
-      console.error('Error uploading product:', error);
-    }
-  };
+    
+  }
 
   return (
     <div className='py-4 pl-[12%]'>
