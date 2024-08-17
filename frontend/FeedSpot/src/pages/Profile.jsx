@@ -1,18 +1,12 @@
 import { Avatar, Box, Button, Card, Flex, Heading, Text, TextArea, TextField } from '@radix-ui/themes';
-import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '@/store/atoms/UserAtom';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios"
+
 
 const Profile = () => {
-  const [detials,setDetials] = useState({}) 
+  const detials = useRecoilValue(UserAtom);
   const navigate = useNavigate();
-  useEffect(()=>{
-    axios.get('http://localhost:3000/api/v1/user_details',{
-      headers:{
-        'Authorization': "Bearer " + localStorage.getItem('token')
-      }
-    }).then((res)=>setDetials(res.data.details))
-    },[])
     
   return (
     <div className='py-4 pl-[12%]'>

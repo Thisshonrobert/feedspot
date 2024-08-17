@@ -61,17 +61,13 @@ rootRouter.post("/signin", async (req, res) => {
 rootRouter.post(
   "/post",
   authMiddleware,
-  upload.single("image"),
   async (req, res) => {
     const post_text = req.body.post_text;
-    const post_url = req.file;
+    const post_url = req.body.post_url;
     const createPost = await Posts.create({
       userId: req.userId,
       post_text,
-      post_url: {
-        data: post_url.buffer,
-        contentType: post_url.mimetype,
-      },
+      post_url,
     });
     if (createPost) {
       return res.status(200).json({
@@ -133,7 +129,7 @@ rootRouter.get("/user_details", authMiddleware, async (req, res) => {
     user_age: userdetails.user_age,
   };
   return res.json({
-    details,
+    details
   });
 });
 

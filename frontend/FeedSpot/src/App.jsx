@@ -9,12 +9,14 @@ import Signup from './pages/Signup';
 import { RecoilRoot } from "recoil";
 import ViewPosts from "./pages/ViewPosts";
 import { ToastContainer } from 'react-toastify';
+import FetchUserDetails from './component/FetchUserDetails';
 
 function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-    {/* <FetchPosts/> */}
+    <FetchPosts/>
+    <FetchUserDetails/>
     <Routes>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />

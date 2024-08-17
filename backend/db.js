@@ -51,9 +51,8 @@ const postSchema = new mongoose.Schema({
         required:true
     },
     post_url:{
-        data:Buffer,
-        contentType:String
-    
+        type:String,
+        required:true
     },
     likes_count:{
         type:Number,

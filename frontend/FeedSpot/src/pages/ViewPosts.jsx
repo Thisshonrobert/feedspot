@@ -6,6 +6,7 @@ import { useRecoilValueLoadable } from "recoil";
 import { PostsAtom } from "../store/atoms/PostAtom";
 import Post from "@/component/Post";
 import RecentUsers from "@/component/RecentUsers";
+import { Grid } from '@mui/material';
 
 
 const ViewPosts = () => {
@@ -20,7 +21,7 @@ const ViewPosts = () => {
       );
     case "hasValue":
       const posts = PostsLoadable.contents;
-
+  
       return (
         <div className="flex h-screen ">
           <div className="w-1/4 ml-3 flex flex-col space-y-6">
@@ -35,7 +36,13 @@ const ViewPosts = () => {
               {/* {posts.map((post) => (
                 <Post key={post._id}/>
               ))} */}
-              <Post />
+            <Grid container justify="center" spacing={4}>
+              {posts.map((post) => (
+                <Grid item key={post._id} xs={12} sm={6} md={4} lg={3}>
+                  <Post post={post} />
+                </Grid>
+              ))}
+            </Grid>
             </ScrollArea>
           </div>
         </div>
