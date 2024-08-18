@@ -80,16 +80,11 @@ rootRouter.post(
 rootRouter.get("/posts", async (req, res) => {
   try {
     const posts = await Posts.find({});
-    const postsWithImages = posts.map((post) => {
-      const imageUrl = `data:${
-        post.post_url.contentType
-      };base64,${post.post_url.data.toString("base64")}`;
-      return {
-        ...post._doc,
-        post_url: imageUrl,
-      };
-    });
-    return res.status(200).json({ posts: postsWithImages });
+      return res.status(200).json(
+        {
+          posts
+        }
+      )
   } catch (error) {
     console.error("Error fetching posts:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -101,16 +96,7 @@ rootRouter.get("/myposts", authMiddleware, async (req, res) => {
     const posts = await Posts.find({
       userId: req.userId,
     });
-    const postsWithImages = posts.map((post) => {
-      const imageUrl = `data:${
-        post.post_url.contentType
-      };base64,${post.post_url.data.toString("base64")}`;
-      return {
-        ...post._doc,
-        post_url: imageUrl,
-      };
-    });
-    return res.status(200).json({ posts: postsWithImages });
+    return res.status(200).json({ posts });
   } catch (error) {
     console.error("Error fetching posts:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -187,7 +173,8 @@ rootRouter.get("/recent-three", authMiddleware, async (req, res) => {
   try {
     const recentUsers = await Users.find({}).sort({ createdAt: -1 }).limit(3);
 
-    res.status(200).json(recentUsers);
+    res.status(200).json(
+      {recentUsers});
   } catch (e) {
     res.status(500).json({ error: "Failed to fetch recent users" });
   }
@@ -218,5 +205,22 @@ rootRouter.put('/addUserDetials', authMiddleware, (req, res) => {
         });
     });
 });
+
+rootRouter.get('/getUserDetails/:userId',authMiddleware,async(req,res)=>{
+  const postId = req.params.userId;
+  try{
+    const user = await Users.findOne({_id : postId})
+    const user_name = user.user_name;
+    const user_image = user.user_image;
+  
+    res.status(200).json({
+      user_name,
+      user_image
+    })
+  }
+  catch(e){
+    res.status(500).json({ message: "An error occurred", e});
+  }
+})
 
 module.exports = rootRouter;

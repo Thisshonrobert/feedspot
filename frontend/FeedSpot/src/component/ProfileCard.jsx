@@ -1,6 +1,6 @@
+import { UserAtom } from '@/store/atoms/UserAtom';
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-
 
 const ProfileCard = () => {
   const detials = useRecoilValue(UserAtom);

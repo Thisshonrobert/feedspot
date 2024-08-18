@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { PostsAtom } from '../store/atoms/PostAtom';
 import axios from 'axios';
+import { UserAtom } from '@/store/atoms/UserAtom';
 
 export default function FetchUserDetails(){
-    const setDetials = useSetRecoilState(PostsAtom);
+    const setDetials = useSetRecoilState(UserAtom);
     useEffect(()=>{
       axios.get('http://localhost:3000/api/v1/user_details',{
         headers:{

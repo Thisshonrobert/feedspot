@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Card,
@@ -9,13 +9,10 @@ import {
   Dialog,
 } from "@radix-ui/themes";
 import { Button } from "@/components/ui/button";
-import { Grid } from '@mui/material';
-import axios from "axios";
 import { CiShare1 } from "react-icons/ci";
 import { Share } from "./Share";
-import { PostsAtom } from "@/store/atoms/PostAtom";
 
-export default function Post() {
+export default function Post({post}) {
   const [likes_count, setLikeCount] = useState(0);
   const currentUrl = window.location.href;
 
@@ -40,13 +37,13 @@ export default function Post() {
         <Card className="mt-4 mr-4">
       <Flex gap="3" align="center" className="px-8 py-4">
         <Avatar
-          src={user_url}
+          src={post.user_image}
           radius="full"
           fallback="A"
         />
         <Flex direction="column" gap="1">
           <Heading as="h3" size="4">
-            {username}
+            {post.user_name}
           </Heading>
           <Text color="gray" size="1">
             {post.createdAt}

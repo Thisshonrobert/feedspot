@@ -1,34 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { Grid } from "@mui/material";
+
 const RecentUsers = () => {
+  const [recentUsers, setRecentUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/v1/recent-three",
+          {
+            headers: {
+              'Authorization': "Bearer " + localStorage.getItem('token')
+            }
+          }
+        );
+        setRecentUsers(res.data.recentUsers);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, [recentUsers]);
+
   return (
     <Card>
       <Heading size="2" color="gray">
         Recent Users
       </Heading>
-      <User/>
-      <User/>
-      <User/>
+      <Grid container justify="center" spacing={4}>
+            {recentUsers.map((recentUser) => (
+              <Grid item key={recentUser._id} >
+                <User user={recentUser} />
+              </Grid>
+            ))}
+      </Grid>
     </Card>
   );
 };
 
-const User = ()=>{
+const User = ({user})=>{
     return(
 <Flex align="center" className="px-1 py-1" gap="4">
         <Avatar
-          src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
+          src={user.user_image}
           radius="full"
           fallback="A"
           className="my-2"
         />
         <Flex direction="column" gap="1">
           <Heading as="h2" size="3">
-            {"username"}
+            {user.user_name}
           </Heading>
           <Text color="gray" size="2">
-            @{"name"}
+            @{user.name}
           </Text>
         </Flex>
         <Button variant="secondary">See Profile</Button>
