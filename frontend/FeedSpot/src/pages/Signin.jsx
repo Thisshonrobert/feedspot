@@ -37,7 +37,6 @@ const Signin = () => {
       });
       localStorage.setItem("token", response.data.token);
       navigate("/posts");
-      console.log(response);
     } catch (error) {
       if (error.response && error.response.status === 422) {
         toast.error("Invalid email or password.");

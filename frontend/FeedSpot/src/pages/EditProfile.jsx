@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Box, Button, Card, Flex, Heading, TextArea, TextField, Dialog } from '@radix-ui/themes';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '@/store/atoms/UserAtom';
 
 const EditProfile = () => {
   const [birthdate, setBirthdate] = useState('');
@@ -13,8 +15,34 @@ const EditProfile = () => {
   const [newImg, setNewImg] = useState('');
   const [website, setWebsite] = useState('');
   const [bio, setBio] = useState(''); 
+  const details = useRecoilValue(UserAtom);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!details || !details.name) {
+      axios.get('http://localhost:3000/api/v1/user_details', {
+        headers: {
+          'Authorization': "Bearer " + localStorage.getItem('token')
+        }
+      }).then((res) => {
+        const userDetails = res.data.details;
+        setName(userDetails.name || '');
+        setImg(userDetails.user_image || '');
+        setWebsite(userDetails.user_website || '');
+        setBio(userDetails.user_bio || '');
+        setBirthdate(userDetails.user_birthdate || '');
+        setAge(calculateAge(userDetails.user_birthdate || ''));
+      });
+    } else {
+      setName(details.name);
+      setImg(details.user_image);
+      setWebsite(details.user_website);
+      setBio(details.user_bio);
+      setBirthdate(details.user_birthdate);
+      setAge(details.user_age);
+    }
+  }, [details]);
 
   const calculateAge = (birthdate) => {
     const birthDate = new Date(birthdate);
@@ -31,6 +59,7 @@ const EditProfile = () => {
     const selectedDate = e.target.value;
     setBirthdate(selectedDate);
     const calculatedAge = calculateAge(selectedDate);
+    
     setAge(calculatedAge);
   };
 
@@ -39,34 +68,31 @@ const EditProfile = () => {
     setIsDialogOpen(false);
   };
 
-  const handleSubmit = async(e)=>{
-      e.preventDefault();
-      try {
-        const entry = await axios.put('http://localhost:3000/api/v1/addUserDetials', {
-         name:name,
-         user_image:img,
-         user_website:website,
-         user_bio:bio,
-         user_age:age
-        }, {
-          headers: {
-            "Authorization" : "Bearer " + localStorage.getItem('token')
-          },
-        });
-  
-        if(entry)
-        {
-          toast.success("Edited Successfully");
-          setTimeout(()=>{
-            window.location.reload();
-          },2000)
-        }
-        // Handle success or navigate to a different page
-       navigate('/posts')
-      } catch (error) {
-        console.error('Error uploading details:', error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const entry = await axios.put('http://localhost:3000/api/v1/addUserDetials', {
+        name: name,
+        user_image: img,
+        user_website: website,
+        user_bio: bio,
+        user_age: age
+      }, {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem('token')
+        },
+      });
+
+      if (entry) {
+        toast.success("Edited Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
-    
+      navigate('/posts');
+    } catch (error) {
+      console.error('Error uploading details:', error);
+    }
   }
 
   return (
@@ -79,7 +105,7 @@ const EditProfile = () => {
               <Flex justify='between' align='center'>
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
+                    size="5"
                     src={img}
                     radius="full"
                     fallback="X"
@@ -122,9 +148,9 @@ const EditProfile = () => {
             </Card>
           </Box>
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Website</Heading>
-          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 ' onChange={(e) => setWebsite(e.target.value)} />
+          <TextField.Root placeholder="Website" className='max-w-lg rounded-lg mb-4 ' onChange={(e) => setWebsite(e.target.value)} value={website} />
           <Heading color='gray' as='h2' weight='medium' className='mb-2'>Bio</Heading>
-          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4' onChange={(e) => setBio(e.target.value)} />
+          <TextArea placeholder="Type your Bio" className='max-w-lg rounded-lg mb-4' onChange={(e) => setBio(e.target.value)} value={bio} />
           <Flex align='center' justify='between'>
             <Box>
               <Heading color='gray' as='h2' weight='medium' className='mb-2'>Your Birthday</Heading>

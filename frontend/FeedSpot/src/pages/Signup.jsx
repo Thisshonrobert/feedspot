@@ -25,8 +25,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user_name = firstName + lastName
-    console.log(user_name)
+    const user_name = firstName +" "+lastName
     try {
       const response = await axios.post("http://localhost:3000/api/v1/signup", {
         user_name,
@@ -35,8 +34,8 @@ const Signup = () => {
         user_mobileNo,
       });
       localStorage.setItem("token", response.data.token);
-      console.log(response);
       navigate("/editprofile");
+      // window.location.reload();
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {

@@ -7,15 +7,18 @@ import {
 } from "react-icons/fi";
 import { FaGithub } from "react-icons/fa";
 import {  useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '@/store/atoms/UserAtom';
 
 const StaggeredDropDown = () => {
   const [open, setOpen] = useState(false);
+  const user = useRecoilValue(UserAtom)
 
   return (
     <div className="p-2 flex items-center justify-center ">
       <motion.div animate={open ? "open" : "closed"} className="relative">
         <Avatar
-          src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
+          src={user.user_image}
           radius='full'
           fallback="A"
           onClick={() => setOpen((pv) => !pv)}
@@ -26,9 +29,9 @@ const StaggeredDropDown = () => {
           style={{ originY: "top", translateX: "-50%" }}
           className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-[120%] left-[50%] w-46 overflow-hidden z-50"
         >
-          <Option setOpen={setOpen} Icon={FiEdit} text="Logined as" />
+          <Option setOpen={setOpen} Icon={FiEdit} text={`As ${user.user_name}`} />
           <Option setOpen={setOpen} Icon={FaGithub} text="Github" />
-          <Option setOpen={setOpen} Icon={FiTrash} text="Signout" />
+          <Option setOpen={setOpen} Icon={FiTrash} text="SignOut" />
         </motion.ul>
       </motion.div>
     </div>

@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
   const detials = useRecoilValue(UserAtom);
   const navigate = useNavigate();
+
+  
     
   return (
     <div className='py-4 pl-[12%]'>
@@ -18,21 +20,22 @@ const Profile = () => {
               <Flex justify='between' align='center'>
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
+                    size="5"
                     src={detials.user_image}
                     radius="full"
                     fallback="T"
                   />
                   <Box>
-                    <Text as="div" size="2" weight="bold">
-                      {detials.name}
-                    </Text>
+                    
                     <Text as="div" size="2" color="gray">
                       {detials.user_name}
                     </Text>
+                    <Text as="div" size="2" weight="bold">
+                      @{detials.name}
+                    </Text>
                   </Box>
                 </Flex>
-                <Button radius='full' size='2' className='px-[10%]'>Change photo</Button>
+                {/* <Button radius='full' size='2' className='px-[10%]'>Change photo</Button> */}
               </Flex>
             </Card>
           </Box>

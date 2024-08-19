@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Avatar,
   Card,
@@ -11,30 +11,30 @@ import {
 import { Button } from "@/components/ui/button";
 import { CiShare1 } from "react-icons/ci";
 import { Share } from "./Share";
+import axios from "axios";
 
 export default function Post({post}) {
   const [likes_count, setLikeCount] = useState(0);
   const currentUrl = window.location.href;
 
-  // useEffect(()=>{
-  //  axios.get(`http://localhost:3000/api/v1/like/${id}`,
-  //{
-  //headers:{
-  //  Authorization:'Bearer'+localstorage.getItem('token')
-  //}}).then((response)=>setLikeCount(response.data.likes_count));
+  useEffect(()=>{
+   axios.get(`http://localhost:3000/api/v1/like/${post._id}`,
+  {
+    
+  }).then((response)=>setLikeCount(response.data.likes_count));
 
-  // },[])
+  },[])
 
-  // const handleClick =async()=>{
-  //   const like = axios.post(`http://localhost:3000/api/v1/liked/${id}`,{
-  //     headers:{
-  //      Authorization:'Bearer'+localstorage.getItem('token')
-  //   }})
-  //   setLikeCount(like.data.likes_count)
-  // }
+  const handleClick =async()=>{
+     axios.post(`http://localhost:3000/api/v1/liked/${post._id}`,{
+     
+  }).then((response)=>setLikeCount(response.data.likes_count));
+    
+  }
 
   return (
-        <Card className="mt-4 mr-4">
+    <Box maxWidth='100%'>
+       <Card className="mt-4 mr-4">
       <Flex gap="3" align="center" className="px-8 py-4">
         <Avatar
           src={post.user_image}
@@ -69,7 +69,7 @@ export default function Post({post}) {
             className="m-3"
           >
             <Button
-              //  onClick={handleClick}
+              onClick={handleClick}
               className={
                 "rounded-full  h-0 flex px-2 py-4  hover:text-gray-800 bg-transparent dark:bg-white"
               }
@@ -107,5 +107,7 @@ export default function Post({post}) {
       </Box>
       
     </Card>
+    </Box>
+       
   )
 }

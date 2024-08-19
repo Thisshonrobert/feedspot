@@ -71,7 +71,7 @@ const ViewPosts = () => {
         <RecentUsers />
       </div>
 
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-4 ml-8">
         <ScrollArea className="rounded-md border-black h-full">
           <InputPost />
           <Grid container justify="center" spacing={4}>

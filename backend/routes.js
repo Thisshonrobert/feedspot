@@ -91,17 +91,7 @@ rootRouter.get("/posts", async (req, res) => {
   }
 });
 
-rootRouter.get("/myposts", authMiddleware, async (req, res) => {
-  try {
-    const posts = await Posts.find({
-      userId: req.userId,
-    });
-    return res.status(200).json({ posts });
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-});
+
 
 rootRouter.get("/user_details", authMiddleware, async (req, res) => {
   const userdetails = await Users.findOne({ _id: req.userId });
@@ -139,10 +129,12 @@ rootRouter.put("/addUserDetials", authMiddleware, async (req, res) => {
   });
 });
 
-rootRouter.post("/liked:id", authMiddleware, async (req, res) => {
+
+
+rootRouter.post("/liked/:id", async (req, res) => {
   const postId = req.params.id;
   try {
-    const result = Posts.updateOne(
+    const result = await Posts.updateOne(
       { _id: postId },
       { $inc: { likes_count: 1 } }
     );
@@ -150,19 +142,22 @@ rootRouter.post("/liked:id", authMiddleware, async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    res.json({ message: "Post liked successfully" });
+    // Fetch updated likes count
+    const updatedPost = await Posts.findOne({ _id: postId });
+    res.json({ likes_count: updatedPost.likes_count });
   } catch (error) {
     res.status(500).json({ message: "An error occurred", error });
   }
 });
 
-rootRouter.get("/like:id", authMiddleware, async (req, res) => {
+rootRouter.get("/like/:id",async (req, res) => {
   const postId = req.params.id;
   try {
-    const result = Posts.findOne({ _id: postId });
-    res.json({
-      likes_count: result,
-    });
+    const result = await Posts.findOne({ _id: postId }, 'likes_count');
+    if (!result) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    res.json({ likes_count: result.likes_count });
   } catch (error) {
     res.status(500).json({ message: "An error occurred", error });
   }

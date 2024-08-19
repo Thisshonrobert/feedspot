@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Card,Heading } from '@radix-ui/themes';
+import { Button } from '@/components/ui/button';
 
 const InputPost = () => {
   const [postText, setPostText] = useState("");
@@ -40,7 +42,7 @@ const InputPost = () => {
   };
 
   return (
-    <div className="mr-4 p-4 border rounded shadow">
+    <Card className="mr-4 p-4 ">
       <div className="flex gap-3 items-center mb-4">
         <img
           src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
@@ -53,38 +55,38 @@ const InputPost = () => {
           placeholder="What's Happening..?"
           value={postText}
           onChange={(e) => setPostText(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full text-black"
         />
       </div>
-      <div className="flex justify-between">
-        <button onClick={() => setIsDialogOpen(true)} className="bg-blue-500 text-white px-4 py-2 rounded">
+      <div className="flex justify-between ml-12 mr-1">
+        <Button onClick={() => setIsDialogOpen(true)} >
           Add Photo
-        </button>
-        <button onClick={handlePostUpload} className="bg-green-500 text-white px-4 py-2 rounded">
+        </Button>
+        <Button onClick={handlePostUpload} >
           Post
-        </button>
+        </Button>
       </div>
       {isDialogOpen && (
-        <div className="mt-4 p-4 border rounded">
-          <h3>Enter Photo Link</h3>
+        <Card className="mt-4 p-4">
+          <Heading size='4' as='h2'>Enter Photo Link</Heading>
           <input
             type="text"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="Enter image URL"
-            className="border p-2 rounded w-full mt-2"
+            className="border p-2 rounded w-full mt-2 text-black"
           />
           <div className="flex justify-end gap-3 mt-4">
-            <button onClick={() => setIsDialogOpen(false)} className="bg-gray-500 text-white px-4 py-2 rounded">
+            <Button onClick={() => setIsDialogOpen(false)} >
               Cancel
-            </button>
+            </Button>
             <button onClick={handleImageSave} className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
             </button>
           </div>
-        </div>
+        </Card>
       )}
-    </div>
+    </Card>
   );
 };
 
