@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-mongoose.connect("mongodb+srv://learning:GNO0z745ZWvgVARG@cluster0.stznz.mongodb.net/linkedin");
+mongoose.connect("your db url");
 
 
 const userSchema = new mongoose.Schema({
